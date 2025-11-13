@@ -133,7 +133,7 @@ Ollama is free software that runs the AI brain.
 ### Submitted by:
 - Name: Vishruth H V
 - Phone: 9880004466
-- Email: vishruthhv@gmail.com
+- Email: vishruthvasu@gmail.com
 - LinkedIn: https://www.linkedin.com/in/vishruth-hv-16870326b/
 - SRN: PES1UG22AM193
 - Branch: CSE-AIML
