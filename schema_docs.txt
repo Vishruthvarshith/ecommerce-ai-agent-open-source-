@@ -1,0 +1,152 @@
+DATABASE SCHEMA FOR BRAZILIAN E-COMMERCE DATASET
+================================================
+
+This database contains data about 100,000 orders from 2016 to 2018 made at multiple marketplaces in Brazil.
+
+
+Table: customers
+Description: Customer information including location
+Row count: 99,441
+Columns:
+  • customer_id (TEXT)
+  • customer_unique_id (TEXT)
+  • customer_zip_code_prefix (INTEGER)
+  • customer_city (TEXT)
+  • customer_state (TEXT)
+
+------------------------------------------------------------
+
+Table: geolocation
+Description: Geographic coordinates for zip codes
+Row count: 1,000,163
+Columns:
+  • geolocation_zip_code_prefix (INTEGER)
+  • geolocation_lat (REAL)
+  • geolocation_lng (REAL)
+  • geolocation_city (TEXT)
+  • geolocation_state (TEXT)
+
+------------------------------------------------------------
+
+Table: order_items
+Description: Items within each order with pricing
+Row count: 112,650
+Columns:
+  • order_id (TEXT)
+  • order_item_id (INTEGER)
+  • product_id (TEXT)
+  • seller_id (TEXT)
+  • shipping_limit_date (TEXT)
+  • price (REAL)
+  • freight_value (REAL)
+
+------------------------------------------------------------
+
+Table: order_payments
+Description: Payment information for orders
+Row count: 103,886
+Columns:
+  • order_id (TEXT)
+  • payment_sequential (INTEGER)
+  • payment_type (TEXT)
+  • payment_installments (INTEGER)
+  • payment_value (REAL)
+
+------------------------------------------------------------
+
+Table: order_reviews
+Description: Customer reviews and ratings
+Row count: 99,224
+Columns:
+  • review_id (TEXT)
+  • order_id (TEXT)
+  • review_score (INTEGER)
+  • review_comment_title (TEXT)
+  • review_comment_message (TEXT)
+  • review_creation_date (TEXT)
+  • review_answer_timestamp (TEXT)
+
+------------------------------------------------------------
+
+Table: orders
+Description: Order details with timestamps and status
+Row count: 99,441
+Columns:
+  • order_id (TEXT)
+  • customer_id (TEXT)
+  • order_status (TEXT)
+  • order_purchase_timestamp (TEXT)
+  • order_approved_at (TEXT)
+  • order_delivered_carrier_date (TEXT)
+  • order_delivered_customer_date (TEXT)
+  • order_estimated_delivery_date (TEXT)
+
+------------------------------------------------------------
+
+Table: products
+Description: Product catalog with categories
+Row count: 32,951
+Columns:
+  • product_id (TEXT)
+  • product_category_name (TEXT)
+  • product_name_lenght (REAL)
+  • product_description_lenght (REAL)
+  • product_photos_qty (REAL)
+  • product_weight_g (REAL)
+  • product_length_cm (REAL)
+  • product_height_cm (REAL)
+  • product_width_cm (REAL)
+
+------------------------------------------------------------
+
+Table: sellers
+Description: Seller information and location
+Row count: 3,095
+Columns:
+  • seller_id (TEXT)
+  • seller_zip_code_prefix (INTEGER)
+  • seller_city (TEXT)
+  • seller_state (TEXT)
+
+------------------------------------------------------------
+
+Table: category_translation
+Description: Product category translations to English
+Row count: 71
+Columns:
+  • product_category_name (TEXT)
+  • product_category_name_english (TEXT)
+
+------------------------------------------------------------
+
+COMMON QUERIES EXAMPLES:
+========================
+
+1. Get order statistics:
+   SELECT COUNT(*) as total_orders, 
+          AVG(payment_value) as avg_value 
+   FROM order_payments;
+
+2. Top product categories:
+   SELECT p.product_category_name, 
+          COUNT(*) as order_count 
+   FROM order_items oi 
+   JOIN products p ON oi.product_id = p.product_id 
+   GROUP BY p.product_category_name 
+   ORDER BY order_count DESC LIMIT 10;
+
+3. Customer satisfaction by state:
+   SELECT c.customer_state, 
+          AVG(r.review_score) as avg_rating 
+   FROM customers c 
+   JOIN orders o ON c.customer_id = o.customer_id 
+   JOIN order_reviews r ON o.order_id = r.order_id 
+   GROUP BY c.customer_state 
+   ORDER BY avg_rating DESC;
+
+4. Monthly order trends:
+   SELECT strftime('%Y-%m', order_purchase_timestamp) as month,
+          COUNT(*) as orders 
+   FROM orders 
+   GROUP BY month 
+   ORDER BY month;
