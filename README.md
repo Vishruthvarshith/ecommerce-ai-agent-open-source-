@@ -143,4 +143,4 @@ Ollama is free software that runs the AI brain.
 Thankyou For Giving Me This Opportunity To Work On This project. I hope I Can Contribute More Projects Like This In Future.
 
 
-Video Link:  https://drive.google.com/file/d/1NJS-sOlHAUc0AXiC_HgKkQD5ZgtCUvcP/view?usp=drive_link
+Video Link:  https://drive.google.com/file/d/1NJS-sOlHAUc0AXiC_HgKkQD5ZgtCUvcP/view?usp=sharing
