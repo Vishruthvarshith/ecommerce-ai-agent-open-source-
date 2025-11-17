@@ -46,7 +46,7 @@ Ollama is free software that runs the AI brain.
 2. In terminal, go to this project folder
 3. Run this command:
    ```
-   python -m venv env
+   python -m venv venv
    ```
 4. Activate the virtual environment:
    - Windows: `.\venv\Scripts\activate`
